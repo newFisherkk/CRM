@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper.CustomerMapper">
+	<!-- paramType换成resultType-->
+	<select id="findAll" resultType="com.pojo.Customer">
+				select 
+		id,name,gender,telephone,address
+				from t_customer
+	</select>
+	
+	<!-- 添加客户 save进来的Customer id为空，这里不能插入id值-->
+	<insert id="save" parameterType="com.pojo.Customer" useGeneratedKeys="true" keyProperty="id">
+		insert into t_customer(name,gender,telephone,address)
+			values(#{name},#{gender},#{telephone},#{address})
+	</insert>
+	
+	<!-- 根据id查询对象   mybatis默认的对象名：value-->
+	<select id="findById" parameterType="int" resultType="com.pojo.Customer">
+					select 
+				id,name,gender,telephone,address
+				from t_customer where id= #{value}
+	</select>
+	
+	<!-- 根据id修改数据 -->
+	<update id="update" parameterType="com.pojo.Customer">
+			update t_customer set 
+		name=#{name},gender=#{gender},telephone=#{telephone},address=#{address}
+			where id=#{id}
+	</update>
+	
+	<!-- 删除数据 -->
+	<delete id="delete" parameterType="Integer[]">
+		delete from t_customer 
+			<where>
+							id 
+				<foreach collection="array" item="id" open="in(" close=")" separator=",">
+							#{id}
+				</foreach>
+			</where>
+	</delete>
+</mapper>

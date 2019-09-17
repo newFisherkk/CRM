@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:context ="http://www.springframework.org/schema/context" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd" >
+        
+        <!--  扫描Controller包 -->
+        <context:component-scan base-package="com.controller"/>
+
+        <!-- 视图解析器:简化Controller类里面编写的视图路径 -->
+        <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        	<!-- 访问的前缀 -->
+        	<property name="prefix" value="/WEB-INF/jsp/"/>
+        	<!-- 访问的后缀 -->
+        	<property name="suffix" value=".jsp"/>
+        </bean>
+        
+        <!-- 如果出现通配符配置的很完美，就先看看上面网址是不是错了 -->
+        <!-- 这个很tm关键，启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
+        <!-- 没他会 No converter found for return value of type: class java.util.ArrayList -->
+ 		<mvc:annotation-driven />
+	
+ </beans>
